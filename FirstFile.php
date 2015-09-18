@@ -9,4 +9,9 @@ class MyTestClass{
     public function main(){
         echo "just test for github";
     }
+
+    public function fun1(){
+        $var = 'hello ,man';
+        echo $var."\n";
+    }
 }
