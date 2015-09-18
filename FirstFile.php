@@ -14,6 +14,10 @@ class MyTestClass{
         $var = 'hello ,man';
         curl_multi_setopt($var,$var,$var);
     }
+
+    public function fun2(){
+        echo "just for test branch dev";
+    }
 }
 
 $objTestClasss = new MyTestClass();
