@@ -12,6 +12,9 @@ class MyTestClass{
 
     public function fun1(){
         $var = 'hello ,man';
-        echo $var."\n";
+        curl_multi_setopt($var,$var,$var);
     }
 }
+
+$objTestClasss = new MyTestClass();
+$objTestClasss->fun1();
