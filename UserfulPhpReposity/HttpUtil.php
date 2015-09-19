@@ -94,6 +94,9 @@ class HttpUtil{
          return $resultInfo;
      }
 
+    public function test(){
+
+    }
 
 
 }
