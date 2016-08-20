@@ -25,5 +25,4 @@ function fun3(){
 
 }
 
-
-fun3();
+func3();
