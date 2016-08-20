@@ -63,6 +63,13 @@ class HttpUtil{
                                    $cookie='',
                                    $cookieJar='',
                                    $refer=''){
+         $postArrayToStr = '';
+         if (is_array($postArray) && count($postArray)>0 ){
+             foreach($postArray as $key => $value){
+                 $postArrayToStr .= urlencode($key). ' = '.$value.'&';
+             }
+             $postArrayToStr = substr($postArrayToStr, 0, strlen($postArrayToStr)-1);
+         }
          $cookiePath = getcwd().'/'.$cookieJar;    //getcwd()取得当前的工作目录
          $curl = curl_init();
          curl_setopt($curl, CURLOPT_URL, $url);
@@ -74,7 +81,7 @@ class HttpUtil{
          }
          if ( is_array($postArray) && count($postArray)>0 ){
              curl_setopt($curl, CURLOPT_POST, 1);
-             curl_setopt($curl, CURLOPT_POSTFIELDS, $postArray);
+             curl_setopt($curl, CURLOPT_POSTFIELDS, $postArrayToStr);
          }
          if ( !empty($cookie) ){
              curl_setopt($curl, CURLOPT_COOKIE, $cookie);
@@ -92,6 +99,30 @@ class HttpUtil{
          }
          curl_close($curl);
          return $resultInfo;
+     }
+
+    /**
+     * @bref: 获取url中的主机域名
+     * @param string $httpUrl
+     * @return string
+     * @throws Exception
+     */
+     public function getHostFromHttpUrl($httpUrl=''){
+         $regex = "/^(http:\/\/)(.*?)\//i";
+         $result = preg_match($regex, $httpUrl, $matchArray);
+         if ( $result === 0 ){
+             throw new Exception('正则匹配失败,传入的url非法', -1);
+         }
+         $tmpHostInfo = $matchArray[2];
+         $tmpArray = explode(':', $tmpHostInfo);  //去掉可能存在的端口
+         if ( strpos($tmpArray[0],'www') !== false ){
+             $hostArray = explode('.', $tmpArray[0]);
+             unset($hostArray[0]);//去掉www
+             $host = implode('.',$hostArray);
+         }else{
+             $host = $tmpArray[0];
+         }
+         return $host;
      }
 
 
